@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+import os
+import sys
+
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
 import sys
 import os
 import time
@@ -117,22 +125,23 @@ class AplikacjaKot:
         root_widget.after(100, odswiezaj_widzet)
 
     def dzwiek_glodny_kot(self):
-        katalog_aplikacji = os.path.dirname(os.path.abspath(__file__))
-        sciezka_audio = os.path.join(katalog_aplikacji, "meaw-xd.wav")
-        try:
-            winsound.PlaySound(sciezka_audio, winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_NODEFAULT)
-        except Exception as e:
-            print(f"Błąd odtwarzania meaw-xd.wav: {e}")
-            winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
-
+            # Używamy resource_path, żeby program znalazł plik wewnątrz EXE
+            sciezka_audio = os.path.abspath(resource_path("miau_xd.wav"))
+            try:
+                winsound.PlaySound(sciezka_audio, winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_NODEFAULT)
+            except Exception as e:
+                print(f"Błąd odtwarzania miau_xd.wav: {e}")
+                winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
+    
     def dzwiek_zadowolony_kot(self):
-        katalog_aplikacji = os.path.dirname(os.path.abspath(__file__))
-        sciezka_audio = os.path.join(katalog_aplikacji, "budzik_do_roboty.wav")
-        try:
-            winsound.PlaySound(sciezka_audio, winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_NODEFAULT)
-        except Exception as e:
-            print(f"Błąd odtwarzania budzik_do_roboty.wav: {e}")
-            winsound.MessageBeep(winsound.MB_OK)
+            # Tutaj tak samo – pełna, bezpieczna ścieżka dla PyInstallera
+            sciezka_audio = os.path.abspath(resource_path("budzik_do_roboty.wav"))
+            try:
+                winsound.PlaySound(sciezka_audio, winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_NODEFAULT)
+            except Exception as e:
+                print(f"Błąd odtwarzania budzik_do_roboty.wav: {e}")
+                winsound.MessageBeep(winsound.MB_OK)
+    
 
     def odpal_przerwe(self):
         self.w_trakcie_przerwy = True

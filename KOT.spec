@@ -5,7 +5,7 @@ a = Analysis(
     ['KOT.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('obrazek_kota.png', '.'), ('miau_xd.wav', '.'), ('budzik_do_roboty.wav', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
